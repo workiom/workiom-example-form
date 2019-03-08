@@ -11,7 +11,9 @@ This repo contains two main files:
 * `configuration-form.html`: Some helper functions that can be handy
   while developing the form.
 
-## Usage Instructions
+
+Usage Instructions
+------------------
 
 First, to integrate with Workiom APIs you will need an authentication
 token. There are many ways to obtain that token, like getting it from
@@ -61,10 +63,13 @@ The `configuration-form.html` form provides a utility to get your
 list's field IDs, Names, and Data Types. This will help you in
 customizing your form.
 
-## Licence
-MIT License
+
+Licence
+----------
 
 ```
+MIT License
+
 Copyright (c) 2019 Workiom
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
