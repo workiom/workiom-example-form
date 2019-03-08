@@ -36,7 +36,14 @@ file. Open the file in your favorite text editor and assign the token
 as a string to the `configAuthenticationToken` constant.
 
 To create a record in a list you will also need to provide its ID
-string to the constant `configListID`.
+string to the constant `configListID`. You can find the listId in the
+URL of the list's page on Workiom. For example, in:
+
+```
+http://app.workiom.com/app/apps/448a3d54-hm94-4637-a83a-18d68dee28hf/list/04c3b546-15d9-4fg9-9325-18a68df81091/47232
+```
+
+`04c3b546-15d9-4fg9-9325-18a68df81091` is the List ID
 
 Now it's time to customize your form inputs and `recordData` object to
 reflect your list's fields (Or the subset of fields that you want your
