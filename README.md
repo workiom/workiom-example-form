@@ -5,6 +5,9 @@ list.
 You can use this example as a starting point to explore Workiom's
 APIs, or customize it for your own use.
 
+For more information about the Workiom API, see:
+https://workiom.com/en/api/
+
 This repo contains two main files:
 * `form.html`: The file intended to be served to end users. It
   inserts a record into a Workiom list.
