@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Workiom Configuration Form</title>
+        <link rel="stylesheet" type="text/css" href="./main.css">
+    </head>
+
+    <script>
+
+     const FieldTypes = [
+         {name: "Text", id: 0},
+         {name: "Number", id: 1},
+         {name: "DateTime", id: 2},
+         {name: "Boolean", id: 3},
+         {name: "StaticSelect", id: 4},
+         {name: "LinkList", id: 5},
+         {name: "User", id: 6},
+         {name: "Website", id: 7},
+         {name: "Email", id: 8},
+         {name: "File", id: 9},
+         {name: "Rollup", id: 10},
+         {name: "PhoneNumber", id: 11},
+         {name: "Count", id: 12}
+     ];
+     
+
+     function getAuthenticationToken () {
+         
+         const url = "https://api.workiom.com/api/TokenAuth/Authenticate";
+         const data = {
+             tenantName: getFormValueByName("tenantName"),
+             userNameOrEmailAddress: getFormValueByName("username"),
+             password: getFormValueByName("password")
+         }
+         
+         const otherParams = {
+             method: "POST",
+             headers: { "Content-Type": "application/json" },
+             body: JSON.stringify(data)
+         }
+         
+         fetch(url, otherParams)
+             .then(response => response.ok ? response.json() : alert("Authentication Error"))
+             .then(data => {
+                 if (!data) return;
+                 document.getElementById("authentication-token-response")
+                         .innerText = "Bearer " + data.result.accessToken;
+                 document.getElementsByName("get-metadata-auth-token")[0]
+                         .value = "Bearer " + data.result.accessToken
+             });
+     }
+
+     
+     function getListFields () {
+         
+         const url =
+             "https://api.workiom.com/api/services/app/Lists/Get?id=" +
+             getFormValueByName("listId") +
+             "&expand=Fields&expand=Views&expand=Filters";
+
+         const otherParams = {
+             method: "GET",
+             headers: {
+                 "Content-Type": "application/json",
+                 "Authorization": getFormValueByName("get-metadata-auth-token")
+             }
+         }
+         
+         fetch(url, otherParams)
+             .then(response => response.ok ? response.json() : alert("Error Getting Field IDs"))
+             .then(data => {
+
+                 if (!data) return;
+
+                 let fieldMappingTable =
+                     `<tr>
+                          <th>ID</th>
+                          <th>Name</th>
+                          <th>Data Type</th>
+                      </tr>`;
+                 
+                 data.result.fields .forEach(field => fieldMappingTable +=
+                     `<tr>
+                          <td>${field.id}</td>
+                          <td>${field.name}</td>
+                          <td>${FieldTypes.find(fieldType => field.dataType === fieldType.id).name}</td>
+                      </tr>`);
+                 
+                 document.getElementById("list-metadata-response").innerHTML = fieldMappingTable;
+             });
+     }
+     
+
+     function getFormValueByName(name) {
+         return document.getElementsByName(name)[0].value;
+     }
+     
+    </script>
+
+    <body>
+        <div class="powered-by">
+            <p>Powered By <img src="./workiom-logo.png"></p>
+        </div>
+        
+        <h1>Configuration Form</h1>
+        
+        <div class="section">
+            <h2>Authentication</h2>
+            <form id="workiom-form"
+                  onsubmit="submitRecord()"
+                  method="post">
+                <label>Workspace Name
+                    <input type="text" name="tenantName">
+                </label>
+                <label>User Name or Email
+                    <input type="text" name="username">
+                </label>
+                <label>Password
+                    <input type="text" name="password">
+                </label>
+                
+                <button type="button" onclick="getAuthenticationToken()">
+                    Authenticate
+                </button>
+            </form>
+            <label>Token:
+                <div class="response"
+                     id="authentication-token-response">
+                </div>
+            </label>
+        </div>
+
+        <div class="section">
+            <h2>List Fields</h2>
+            <form id="workiom-form"
+                  onsubmit="submitRecord()"
+                  method="post">
+                <label>Authentication Token
+                    <input type="text" name="get-metadata-auth-token">
+                </label>
+                <label>List ID
+                    <input type="text" name="listId">
+                </label>
+                
+                <button type="button" onclick="getListFields()">
+                    Get Fields
+                </button>
+            </form>
+            <label>Fields:
+                    <table id="list-metadata-response">
+                    </table>
+            </label>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Workiom Form</title>
+        <link rel="stylesheet" type="text/css" href="./main.css">
+    </head>
+    
+    <script>
+     const configAuthenticationToken = "";
+
+     const configListID = "";
+     
+     function submitRecord() {
+
+         const url = "https://api.workiom.com/api/services/app/Data/Create?listId="
+                   + configListID;
+         console.log(getFormValueByName("Boolean"));
+         const recordData = {
+             "55285": getFormValueByName("Name"),
+             "55286": getFormValueByName("Some other field"),
+             "55287": getFormValueByName("Some Number"),
+             "55288": {label: getFormValueByName("Status")},
+             "55289": getFormValueByName("Date"),
+             "55290": getFormValueByName("Boolean")
+         }
+         
+         const otherParams = {
+             method: "POST",
+             headers: {
+                 "Content-Type": "application/json",
+                 "Authorization": configAuthenticationToken
+             },
+             body: JSON.stringify(recordData)
+         }
+
+         fetch(url, otherParams)
+             .then(res => {
+                 res.ok ? alert("Thanks For Your Submission!") :
+                 alert("Sorry, Submission Failed\n" +
+                       res.status + ": " + res.statusText);
+             });
+         
+         return false;
+     }
+
+     function getFormValueByName(name) {
+         const field = document.getElementsByName(name)[0];
+         return field.type === "checkbox" ? field.checked : field.value;
+     }
+     
+    </script>
+    
+    <body>
+        <div class="powered-by">
+            <p>Powered By <img src="./workiom-logo.png"></p>
+        </div>
+        
+        <h1>Submit Task</h1>
+        
+        <form id="workiom-form"
+              onsubmit="submitRecord()"
+              method="post">
+            <label>Name
+                <input type="text" name="Name">
+            </label>
+            <label>Some other field
+                <input type="text" name="Some other field">
+            </label>
+            <label>Some Number
+                <input type="number" name="Some Number">
+            </label>
+            <label>Status
+                <select name="Status">
+                    <option value=""></option>
+                    <option value="Todo">Todo</option>
+                    <option value="In Progress">In Progress</option>
+                    <option value="Done">Done</option>
+                </select>
+            </label>
+            <label>Date
+                <input type="date" name="Date">
+            </label>
+            <label>Boolean
+                <input type="checkbox" name="Boolean">
+            </label>
+            <button type="button" onclick="submitRecord()">
+                Submit Record
+            </button>
+        </form>
+        
+    </body>
+</html>
