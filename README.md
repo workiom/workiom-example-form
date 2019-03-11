@@ -2,7 +2,8 @@ This example demonstrates some simple integration with the Workiom
 API. It is a form with a few fields that creates a record in a Workiom
 list. You can use this example as a starting point to explore
 Workiom's APIs, or customize it for your own use. For more information
-about the Workiom API, please check the resources below.
+about the Workiom API, please check the resources below:
+
 * [APIs List](https://workiom.com/en/api/)
 * [Guide](https://workiom.com/en/api/)
 * [Demo video](https://vimeo.com/322588596)
