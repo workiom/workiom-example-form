@@ -4,9 +4,9 @@ list. You can use this example as a starting point to explore
 Workiom's APIs, or customize it for your own use. For more information
 about the Workiom API, please check the resources below:
 
-* [Workiom API Guide](https://workiom.com/en/api/)
+* [Workiom API Guide](https://help.workiom.com/en/articles/4175231-workiom-api-guide)
 * [Workiom API Documentation (Swagger)](https://api.workiom.com/swagger/)
-* [Workiom User Guide](https://workiom.com/en/guide/quick-start/)
+* [Workiom User Guide](https://help.workiom.com/en/collections/1989001-introduction)
 * [Example Form Demo video](https://vimeo.com/322588596)
 
 This repo contains two main files:
