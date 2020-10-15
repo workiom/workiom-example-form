@@ -25,33 +25,6 @@
          {name: "Count", id: 12}
      ];
      
-
-     function getAuthenticationToken () {
-         
-         const url = "https://api.workiom.com/api/TokenAuth/Authenticate";
-         const data = {
-             tenantName: getFormValueByName("tenantName"),
-             userNameOrEmailAddress: getFormValueByName("username"),
-             password: getFormValueByName("password")
-         }
-         
-         const otherParams = {
-             method: "POST",
-             headers: { "Content-Type": "application/json" },
-             body: JSON.stringify(data)
-         }
-         
-         fetch(url, otherParams)
-             .then(response => response.ok ? response.json() : alert("Authentication Error"))
-             .then(data => {
-                 if (!data) return;
-                 document.getElementById("authentication-token-response")
-                         .innerText = "Bearer " + data.result.accessToken;
-                 document.getElementsByName("get-metadata-auth-token")[0]
-                         .value = "Bearer " + data.result.accessToken
-             });
-     }
-
      
      function getListFields () {
          
@@ -60,11 +33,12 @@
              getFormValueByName("listId") +
              "&expand=Fields&expand=Views&expand=Filters";
 
+         // check how to get API Key https://help.workiom.com/en/articles/4175231-workiom-api-guide
          const otherParams = {
              method: "GET",
              headers: {
                  "Content-Type": "application/json",
-                 "Authorization": getFormValueByName("get-metadata-auth-token")
+                 "X-Api-Key": "[YourAPIKey]"
              }
          }
          
