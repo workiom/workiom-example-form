@@ -8,15 +8,16 @@
     </head>
     
     <script>
-     const configAuthenticationToken = "";
-
+        
      const configListID = "";
      
      function submitRecord() {
 
          const url = "https://api.workiom.com/api/services/app/Data/Create?listId="
                    + configListID;
+         
          console.log(getFormValueByName("Boolean"));
+         
          const recordData = {
              "55285": getFormValueByName("Name"),
              "55286": getFormValueByName("Some other field"),
@@ -26,12 +27,14 @@
              "55290": getFormValueByName("Boolean")
          }
          
+         // Getting API Key https://help.workiom.com/en/articles/4175231-workiom-api-guide
          const otherParams = {
              method: "POST",
              headers: {
                  "Content-Type": "application/json",
-                 "Authorization": configAuthenticationToken
+                 "X-Api-Key": "[YourAPIKey]"
              },
+             
              body: JSON.stringify(recordData)
          }
 
